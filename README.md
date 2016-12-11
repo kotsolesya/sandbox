@@ -1,0 +1,4 @@
+- Encrypt user id in cookies (cookies.signed)
+  - http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
+- Mark user if he is on list
+- Add tasks sorting by title and created_at (ASC && DESC)
