@@ -5,7 +5,7 @@ server '109.122.62.17', port: 9022, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://github.com/kotsolesya/sandbox.git'
 set :application,     'sandbox'
-set :user,            'mike'
+set :user,            'olesya'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 

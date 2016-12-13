@@ -10,6 +10,7 @@
 
   <body data-user="<%= current_user&.id %>">
     <header>
+      <h1>It Work!<h1>
       <% if current_user %>
         Signed in as <%= current_user.email %> | <%= link_to "Logout", '/logout', method: :delete %>
       <% else %>
