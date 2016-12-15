@@ -1,4 +1,5 @@
-<%= form_for [@list], remote: true do |f| %>
-  <%= f.text_field :title, autocomplete: false %>
-  <%= f.submit %>
+<%= form_for [current_list, @list], remote: true do |f| %>
+  <%= f.text_field :title, autofocus: true, autocomplete: false %>
+  <br>
+  <%= @list.errors[:title].first %>
 <% end %>

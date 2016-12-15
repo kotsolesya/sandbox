@@ -8,22 +8,27 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body data-user="<%= current_user&.id %>">
-    <header>
-      <h1>It Work!<h1>
-      <% if current_user %>
-        Signed in as <%= current_user.email %> | <%= link_to "Logout", '/logout', method: :delete %>
-      <% else %>
-        <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/signup' %>
-      <% end %>
-    </header>
+  <body>
+      <div class="container">
+        <nav class="navbar navbar-light bg-faded">
+          <%= link_to 'ToDo', '/', class: "navbar-brand" %>
+          <ul class="nav navbar-nav navbar-right">
 
-    <div class='errors'>
-      <% flash.each do |key, value| %>
-        <%= content_tag :div, value, class: "flash #{key}" %>
-      <% end %>
-    </div>
+            <% if current_user %>
+              <li>Signed in as <%= current_user.name %></li>
+              <li><%= link_to "My Lists", '/lists' %></li>
+              <li><%= link_to "Logout", '/logout' %></li>
+            <% else %>
+              <li><%= link_to 'Login', '/login' %></li>
+              <li><%= link_to 'Signup', '/signup' %></li>
+            <% end %>
 
+          </ul>
+        </nav>
+      </div>
+
+    <div class="container">
     <%= yield %>
+    </div>
   </body>
 </html>

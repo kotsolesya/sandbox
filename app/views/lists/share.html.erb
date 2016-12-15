@@ -1,0 +1,21 @@
+<%= form_tag @list , method: :patch, remote: true do %>
+
+<div class="form-group row">
+    <div class="col-sm-2 ">
+        <label>Share list
+            <%= @clist.title %>
+            with
+        </label>
+    </div>
+
+    <div class="col-sm-4">
+        <%= label_tag 'email', 'Email' %>
+        <%= email_field_tag 'email', nil, class: 'form-control', placeholder: ' Email Address' %>
+    </div>
+    <div class="col-sm-2">
+        <%= submit_tag 'Share', class: "btn btn-primary btn-sm"%>
+    </div>
+</div>
+<br>
+<% end %>
+<%= link_to 'Back', lists_path, class: "btn btn-primary btn-sm"  %>

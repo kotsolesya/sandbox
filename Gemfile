@@ -13,6 +13,9 @@ gem 'rubocop'
 # gem 'redis', '~> 3.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'dotenv-rails'
+gem 'bootstrap-sass'
+gem 'font-awesome-rails'
+gem 'letter_opener', group: :development
 
 group :development, :test do
   gem 'byebug', platform: :mri

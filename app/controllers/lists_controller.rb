@@ -1,52 +1,70 @@
 class ListsController < ApplicationController
   before_action :authorize
-  before_action :find_list, except: [:index, :create]
+  before_action :set_list, only: [:update, :edit, :destroy]
 
   def index
-    @lists = List.for(current_user)
+    @lists = current_user.olists
+    @share_list = current_user.lists.where.not(owner_id: current_user.id)
+  end
+
+  def new
     @list = List.new
   end
 
-  def show
-    redirect_to list_tasks_path(@list.id)
-  end
-
   def create
-    @list = current_user.lists.create(list_params)
-    redirect_to list_tasks_path(@list.id) if @list.save
-  end
-
-  def share
-    @user = User.find_by(email: params[:email])
-    if @list.all_users.include?(@user)
-      redirect_to list_tasks_path(@list), alert: 'This user is already added to the list'
+    @list = current_user.lists.create(owner_id: current_user.id, title: params[:list][:title])
+    if @list.save
+      redirect_to lists_path
     else
-      send_email
-      @user.shared_lists << @list if @user
-      redirect_to list_tasks_path(@list), notice: 'Email is sent to user'
+      render(:new)
     end
   end
 
+  def update
+    #  @list = current_user.lists.find(params[:id])
+    @list.update(list_params)
+  end
+
+  def edit
+    #  @list = current_user.lists.find(params[:id])
+  end
+
   def destroy
+    #  @list = current_user.lists.find(params[:id])
     @list.destroy
+  end
+
+  def share
+    if params[:_method] == 'patch'
+      @email = params[:email]
+      @user = User.find_by(email: @email)
+      if @user
+        @list = List.find(params[:id])
+        @user.lists << @list
+        UserNotifierMailer.share_email(@user, current_user).deliver_now
+        redirect_to lists_path
+      else
+        UserNotifierMailer.send_invite(@email, current_user).deliver_now
+        redirect_to share_list_path, notice: 'Registration invite has been sent'
+      end
+    else
+      @clist = List.find(params[:id])
+    end
   end
 
   private
 
   def list_params
-    params.require(:list).permit(:title)
+    params.fetch(:list).permit(:title, :id_user)
   end
 
-  def find_list
-    @list = List.find(params[:id])
+  def set_list
+    @list = current_user.lists.find(params[:id])
   end
 
-  def send_email
-    if @user
-      ListMailer.join_list_email(@user, current_user, @list).deliver_later
-    else
-      ListMailer.join_app_email(params[:email], @list).deliver_later
-      @list.pending_emails.create(email: params[:email])
-    end
+  def lists
+    @lists ||= current_user.lists.all
   end
+
+  helper_method :lists
 end

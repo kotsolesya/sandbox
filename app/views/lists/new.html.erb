@@ -1,10 +1,8 @@
-<h1>New List</h1>
+<h1 >New List</h1>
 
-<%= form_for @list, remote: true do |f| %>
-  <p>
-    <%= f.label :title %><br/>
-    <%= f.text_field :title %>
-  </p>
+	<%= form_for @list, remote: true do |f| %>
+	<%= f.text_field :title, autofocus: true %>
+	<%= submit_tag "Create list" %>
+	<% end %>
 
-  <%= f.submit 'Create'%>
-<% end %>
+<%= link_to 'Back', lists_path, class: "btn btn-primary btn-sm"  %>
