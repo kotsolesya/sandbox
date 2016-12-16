@@ -8,6 +8,10 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
@@ -15,6 +19,15 @@ class UsersController < ApplicationController
       redirect_to root_url, notice: 'You signed up successfully'
     else
       render 'new'
+    end
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      redirect_to root_url, notice: 'Successful update'
+    else
+      render 'edit'
     end
   end
 

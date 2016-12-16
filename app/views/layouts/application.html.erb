@@ -17,10 +17,14 @@
             <% if current_user %>
               <li>Signed in as <%= current_user.name %></li>
               <li><%= link_to "My Lists", '/lists' %></li>
+              <li><%= link_to 'Settings', edit_user_path(current_user.id) %></li>
               <li><%= link_to "Logout", '/logout' %></li>
+                  <%= gravatar_for current_user %>
             <% else %>
+
               <li><%= link_to 'Login', '/login' %></li>
               <li><%= link_to 'Signup', '/signup' %></li>
+
             <% end %>
 
           </ul>
