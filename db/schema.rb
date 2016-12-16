@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20161127114312) do
   create_table "lists_users", id: false, force: :cascade do |t|
     t.integer "list_id", null: false
     t.integer "user_id", null: false
-    t.index [nil, nil], name: "index_lists_users_on_list_and_user"
   end
 
   create_table "tasks", force: :cascade do |t|
